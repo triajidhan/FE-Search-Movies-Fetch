@@ -10,10 +10,16 @@ function showMovies() {
     fetch('http://www.omdbapi.com/?apikey=3afb022f&s=' + searchInput.value)
         .then(response => response.json())
         .then(response => {
-            const movies = response.Search
-            let cards = ''
-            movies.forEach(m => cards += showCards(m));
-            movieList.innerHTML = cards
+
+            if (response.Response == "True") {
+                const movies = response.Search
+                let cards = ''
+                movies.forEach(m => cards += showCards(m));
+                movieList.innerHTML = cards
+            } else {
+                movieList.innerHTML = `<h1>${response.Error}</h1>`
+            }
+
 
             searchInput.value = ('')
         })
